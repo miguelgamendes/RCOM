@@ -7,10 +7,6 @@
 
 #include <signal.h>
 
-//connection establishment variables
-int retry_count = 0;
-int connecting = 1;
-
 void llopen();
 
 #endif

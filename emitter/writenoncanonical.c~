@@ -17,10 +17,8 @@
 
 volatile int STOP=FALSE;
 
-/* this state-machine prototype shouldn't be necessary anymore
 typedef enum {CONNECTING, TRANSMITTING, CLOSING} connStage;
 connStage currentConnStage = CONNECTING;
-*/
 
 int main(int argc, char** argv)
 {

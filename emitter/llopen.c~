@@ -2,8 +2,6 @@
 
 void set() {
 	puts("Trying again...");
-	retry_count++;
-	connecting;
 }
 
 int llopen() {

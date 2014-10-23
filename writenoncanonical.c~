@@ -28,6 +28,12 @@ int establishConn(int fd) {
 	
 }
 
+int set() {
+	puts("Trying again...");
+	currentConnStage = CONNECTING;
+	return 0;
+}
+
 int main(int argc, char** argv)
 {
 	puts("Beginning.");
@@ -41,6 +47,10 @@ int main(int argc, char** argv)
       printf("Usage:\tnserial SerialPort\n\tex: nserial /dev/ttyS1\n");
       exit(1);
     }
+
+	puts("Setting alarm signal...");
+	signal(SIGALRM, set); //install set routine
+	puts("Alarm signal set.");
 
 	puts("Opening port...");
 

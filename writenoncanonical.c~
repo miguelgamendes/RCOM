@@ -21,10 +21,6 @@ int connAttempts = 0;
 typedef enum {CONNECTING, TRANSMITTING, CLOSING} connStage;
 connStage currentConnStage = CONNECTING;
 
-int establishConn(int fd) {
-	
-}
-
 int main(int argc, char** argv)
 {
 	puts("Beginning.");

@@ -14,8 +14,8 @@
 #include <signal.h>
 
 //connection establishment variables
-int retry_count = 0;
-int connecting = 1;
+int retry_count;
+int connecting;
 
 int llopen(int fd);
 

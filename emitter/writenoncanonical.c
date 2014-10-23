@@ -48,7 +48,7 @@ int main(int argc, char** argv)
     newtio.c_lflag = 0;
 
     newtio.c_cc[VTIME]    = 3;   /* inter-character timer */
-    newtio.c_cc[VMIN]     = 5;   /* blocking read until 5 chars received */
+    newtio.c_cc[VMIN]     = 0;   /* blocking read until 5 chars received */
 
     tcflush(fd, TCIFLUSH);
 

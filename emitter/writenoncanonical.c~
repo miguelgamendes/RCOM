@@ -33,14 +33,11 @@ int main(int argc, char** argv)
 
     fd = open(argv[1], O_RDWR | O_NOCTTY );
     if (fd <0) {perror(argv[1]); exit(-1); }
-puts("1");
 
     if ( tcgetattr(fd,&oldtio) == -1) { /* save current port settings */
       perror("tcgetattr");
       exit(-1);
     }
-
-	puts("2");
 
     bzero(&newtio, sizeof(newtio));
     newtio.c_cflag = BAUDRATE | CS8 | CLOCAL | CREAD;
@@ -51,7 +48,7 @@ puts("1");
     newtio.c_lflag = 0;
 
     newtio.c_cc[VTIME]    = 3;   /* inter-character timer */
-    newtio.c_cc[VMIN]     = 5;   /* blocking read until 5 chars received */
+    newtio.c_cc[VMIN]     = 0;   /* blocking read until 5 chars received */
 
     tcflush(fd, TCIFLUSH);
 

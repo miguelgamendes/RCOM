@@ -6,6 +6,7 @@ void set() {
 }
 
 void llopen() {
+	//frame creation
 	unsigned char SET[5], UA[5];
 	SET[0] = F;
 	SET[1] = A;

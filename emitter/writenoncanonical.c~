@@ -1,13 +1,6 @@
 /*Non-Canonical Input Processing*/
 
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <termios.h>
-#include <stdio.h>
-#include <unistd.h>
-
-#include "logicallink.h"
+#include "llopen.h"
 
 #define BAUDRATE B38400
 #define MODEMDEVICE "/dev/ttyS1"
@@ -17,8 +10,10 @@
 
 volatile int STOP=FALSE;
 
+/* this state-machine prototype shouldn't be necessary anymore
 typedef enum {CONNECTING, TRANSMITTING, CLOSING} connStage;
 connStage currentConnStage = CONNECTING;
+*/
 
 int main(int argc, char** argv)
 {
@@ -38,11 +33,14 @@ int main(int argc, char** argv)
 
     fd = open(argv[1], O_RDWR | O_NOCTTY );
     if (fd <0) {perror(argv[1]); exit(-1); }
+puts("1");
 
     if ( tcgetattr(fd,&oldtio) == -1) { /* save current port settings */
       perror("tcgetattr");
       exit(-1);
     }
+
+	puts("2");
 
     bzero(&newtio, sizeof(newtio));
     newtio.c_cflag = BAUDRATE | CS8 | CLOCAL | CREAD;
@@ -62,7 +60,9 @@ int main(int argc, char** argv)
       exit(-1);
     }
 
-	if(llopen())
+	puts("Port is ready.");
+
+	if(llopen(fd))
 		return 1;
     
     if ( tcsetattr(fd,TCSANOW,&oldtio) == -1) {

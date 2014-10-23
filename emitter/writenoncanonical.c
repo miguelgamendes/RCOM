@@ -1,13 +1,6 @@
 /*Non-Canonical Input Processing*/
 
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <fcntl.h>
-#include <termios.h>
-#include <stdio.h>
-#include <unistd.h>
-
-#include "logicallink.h"
+#include "llopen.h"
 
 #define BAUDRATE B38400
 #define MODEMDEVICE "/dev/ttyS1"
@@ -64,7 +57,9 @@ int main(int argc, char** argv)
       exit(-1);
     }
 
-	if(llopen())
+	puts("Port is ready.");
+
+	if(llopen(fd))
 		return 1;
     
     if ( tcsetattr(fd,TCSANOW,&oldtio) == -1) {

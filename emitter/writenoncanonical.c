@@ -58,8 +58,12 @@ int main(int argc, char** argv)
     }
 
 	puts("Port is ready.");
-
+	
+	//data link protocol
 	if(llopen(fd))
+		return 1;
+
+	if(llclose(fd))
 		return 1;
     
     if ( tcsetattr(fd,TCSANOW,&oldtio) == -1) {

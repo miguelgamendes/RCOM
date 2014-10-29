@@ -18,7 +18,7 @@ int llclose(int fd) {
 
 	//sending SET frame
 	puts("Sending DISC frame...");
-	res = write(fd,SET,5);
+	res = write(fd,DISC,5);
 	alarm(3);
 	if(res != -1) {
 		printf("%d bytes written\n", res);
@@ -32,7 +32,6 @@ int llclose(int fd) {
 	//receiving UA frame
 	puts("Reading DISC frame...");
 	while(stop){
-		puts("Reading...");
 		res = read(fd,&c,1);
 		if(res > 0) {
 			alarm(0);

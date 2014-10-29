@@ -119,6 +119,8 @@ int llopen(int fd) {
 				}
 			}
 		}
+		if(estado == 4)
+			break;
 	}
 
 	if(retry_count >= 3) {

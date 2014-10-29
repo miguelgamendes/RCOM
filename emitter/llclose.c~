@@ -18,7 +18,7 @@ int llclose(int fd) {
 
 	//sending SET frame
 	puts("Sending DISC frame...");
-	res = write(fd,SET,5);
+	res = write(fd,DISC,5);
 	alarm(3);
 	if(res != -1) {
 		printf("%d bytes written\n", res);
@@ -85,7 +85,7 @@ int llclose(int fd) {
 					printf("estado 4\n");
 					if (c == F){
 						DISC2[4] = c;
-						if (DISC2[0] == F && DISC2[1] == A && DISC2[2] == CS && DISC2[3] == (DISC2[1] ^ DISC2[2]) && UA[4] == F){
+						if (DISC2[0] == F && DISC2[1] == A && DISC2[2] == CS && DISC2[3] == (DISC2[1] ^ DISC2[2]) && DISC2[4] == F){
 							puts("Received DISC frame successfully.");
 							stop = 0;
 							puts("Finished reading.");

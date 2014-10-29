@@ -44,12 +44,9 @@ int llopen(int fd) {
 				return 1;
 			}
 			
-			printf("stop: %d\nconnecting: %d", stop, connecting);
-			
 			//receiving UA frame
 			puts("Reading UA frame...");
 			while(stop && !connecting){
-				puts("Reading...");
 				res = read(fd,&c,1);
 				if(res > 0) {
 					alarm(0);

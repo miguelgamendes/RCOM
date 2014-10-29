@@ -10,6 +10,8 @@
 #define CD 0x0B
 #define CS 0x07
 
+#define <unistd.h>
+
 int llclose(int fd);
 
 #endif

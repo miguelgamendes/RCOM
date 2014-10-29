@@ -11,6 +11,7 @@ int llclose(int fd){
 	DISC[3] = (DISC[1] ^ DISC[2]);
 	DISC[4] = F;
 
+	puts("Receiving DISC frame...");
 	while(stop){
 	    	res = read(fd,&c,1);
 		switch(estado){
@@ -60,6 +61,7 @@ int llclose(int fd){
 			case 4:{
 				printf("estado 4\n");
 				if (c == F){
+					puts("Sending DISC frame...");
 					res2 = write(fd,DISC,5);
 					printf("Enviou %d bytes \n",res2);
 					stop = 0;

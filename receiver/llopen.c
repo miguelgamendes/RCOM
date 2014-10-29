@@ -11,6 +11,7 @@ unsigned char SET[5];
 	UA[3] = (UA[1] ^ UA[2]);
 	UA[4] = F;
 
+	puts("Receiving SET frame...");
 	while(stop){
 	    	res = read(fd,&c,1);
 		switch(estado){
@@ -52,7 +53,7 @@ unsigned char SET[5];
 			}
 			case 3:{
 				printf("estado 3\n");
-				if (c == (SET[1]^SET[2]){
+				if (c == (SET[1]^SET[2])){
 					SET[3] = c;
 					estado = 4;
 				}
@@ -69,6 +70,7 @@ unsigned char SET[5];
 				if (c == F){
 					SET[4] = c;
 					if (SET[0] == F && SET[1] == A && SET[2] == C && SET[3] == (SET[1]^SET[2]) && SET[4] == F){
+						puts("Sending UA frame...");
 						res2 = write(fd,UA,5);
 						printf("Enviou %d bytes \n",res2);
 						stop = 0;

@@ -27,12 +27,10 @@ int llclose(int fd) {
 		return 1;
 	}
 			
-	printf("stop: %d\nconnecting: %d", stop, connecting);
-			
 	//receiving UA frame
 	puts("Reading DISC frame...");
 	while(stop){
-		puts("Reading...");
+		printf("%d", stop);
 		res = read(fd,&c,1);
 		if(res > 0) {
 			alarm(0);
@@ -59,7 +57,7 @@ int llclose(int fd) {
 				}
 				case 2:{				
 					printf("estado 2\n");
-					if (c == CS){
+					if (c == C){
 						DISC2[2] = c;
 						estado = 3;
 					} else if (c == F){

@@ -27,8 +27,6 @@ int llclose(int fd) {
 		return 1;
 	}
 			
-	printf("stop: %d\nconnecting: %d", stop, connecting);
-			
 	//receiving UA frame
 	puts("Reading DISC frame...");
 	while(stop){
@@ -58,7 +56,7 @@ int llclose(int fd) {
 				}
 				case 2:{				
 					printf("estado 2\n");
-					if (c == CS){
+					if (c == C){
 						DISC2[2] = c;
 						estado = 3;
 					} else if (c == F){
@@ -102,6 +100,8 @@ int llclose(int fd) {
 
 		if(estado == 4)
 			break;
+		
+		printf("%d", stop);
 	}
 
 	return 0;

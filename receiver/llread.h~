@@ -1,0 +1,9 @@
+#ifndef LLREAD_H
+#define LLREAD_H
+
+#define F 0x7E
+#define
+
+int llread(fd);
+
+#endif

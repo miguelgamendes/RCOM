@@ -11,9 +11,10 @@ unsigned char SET[5];
 	UA[3] = (UA[1] ^ UA[2]);
 	UA[4] = F;
 
-	puts("Receiving UA frame...");
+	puts("Receiving SET frame...");
 	while(stop){
 	    	res = read(fd,&c,1);
+		if(res != -1)
 		switch(estado){
 			case 0: {
 				printf("estado 0\n");

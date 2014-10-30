@@ -64,7 +64,6 @@ int llclose(int fd){
 					puts("Sending DISC frame...");
 					res2 = write(fd,DISC,5);
 					printf("Enviou %d bytes \n",res2);
-					sleep(5);
 					stop = 0;
 					break;
 				}

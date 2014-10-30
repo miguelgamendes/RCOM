@@ -7,6 +7,6 @@
 #define CSR 0x01
 #define CS 0x00
 
-int llread(fd);
+int llread(int fd);
 
 #endif

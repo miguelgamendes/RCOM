@@ -1,5 +1,5 @@
 #ifndef LLCLOSE_H
-#define
+#define LLCLOSE_H
 
 #include <fcntl.h>
 #include <sys/types.h>

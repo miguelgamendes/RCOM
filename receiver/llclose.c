@@ -14,6 +14,7 @@ int llclose(int fd){
 	puts("Receiving DISC frame...");
 	while(stop){
 	    	res = read(fd,&c,1);
+		if(res != -1)
 		switch(estado){
 			case 0: {
 				printf("estado 0\n");

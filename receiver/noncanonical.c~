@@ -72,9 +72,13 @@ int main(int argc, char** argv)
 	printf("New termios structure set\n");
 
 	if (llopen(fd) == -1){
-		printf("Error opening port\n");
 		return 1;
 	}
+
+	unsigned char* data;
+
+	if(llread(fd, &data))
+		return 1;
 
 	if(llclose(fd))
 		return 1;

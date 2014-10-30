@@ -35,7 +35,7 @@ int llwrite(int fd, unsigned char* data, int dataSize) {
 		return 1;
 	}
 
-	res = write(fd,Itail,2);
+	res = write(fd,Itail,dataSize);
 	resSum += res;
 	if(res != -1) {
 		printf("%d bytes written\n", resSum);

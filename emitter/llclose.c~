@@ -30,7 +30,6 @@ int llclose(int fd) {
 	//receiving UA frame
 	puts("Reading DISC frame...");
 	while(stop){
-		printf("%d", stop);
 		res = read(fd,&c,1);
 		if(res > 0) {
 			alarm(0);

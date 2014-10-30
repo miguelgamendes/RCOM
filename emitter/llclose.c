@@ -19,7 +19,6 @@ int llclose(int fd) {
 	//sending SET frame
 	puts("Sending DISC frame...");
 	res = write(fd,DISC,5);
-	alarm(3);
 	if(res != -1) {
 		printf("%d bytes written\n", res);
 	} else {
@@ -100,8 +99,6 @@ int llclose(int fd) {
 
 		if(estado == 4)
 			break;
-		
-		printf("%d", stop);
 	}
 
 	return 0;

@@ -64,6 +64,11 @@ int main(int argc, char** argv)
 	if(llopen(fd))
 		return 1;
 
+	unsigned char* data = "aaaaa";
+
+	if(llwrite(fd, &data, 5))
+		return 1;
+
 	if(llclose(fd))
 		return 1;
     

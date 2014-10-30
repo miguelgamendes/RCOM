@@ -1,7 +1,9 @@
 #include "llread.h"
 
 int llread(int fd){
-
+	
+	int file = open("pinguim.gif", O_WRONLY | O_CREAT);
+	
 	unsigned char Iheader[3], Itail[2], RR[5], REJ[5], c;
 	int res, res2, estado = 0, stop = 1, dataIndex = 0;
 
@@ -62,6 +64,7 @@ int llread(int fd){
 			}
 			case 3:{
 				printf("estado 3\n");
+				printf("%x\n", c);
 				if (c == (Iheader[1]^Iheader[2])){
 					estado = 4;
 				}
@@ -88,7 +91,7 @@ int llread(int fd){
 			case 5:{
 				printf("estado 5 : %x || %c - index: %d\n", c, c, dataIndex);
 				data[dataIndex] = c;
-				if(dataIndex == 254) {
+				if(dataIndex == 10999) {
 					estado = 3;
 					dataIndex = 0;
 				}
@@ -97,6 +100,9 @@ int llread(int fd){
 			}
 		}
 	}
+	
+	write(file, data, 11000);
+	close(file);
 
 	printf("Received data: %s\n", data);
 

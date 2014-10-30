@@ -75,8 +75,6 @@ int main(int argc, char** argv)
 		return 1;
 	}
 
-	newtio.c_cc[VMIN]     = 0;
-
 	unsigned char* data;
 
 	if(llread(fd, &data))

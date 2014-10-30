@@ -7,6 +7,8 @@
 #define CSR 0x01
 #define CS 0x00
 
+#include <fcntl.h>
+
 int llread(int fd);
 
 #endif

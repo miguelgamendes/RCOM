@@ -66,7 +66,7 @@ int main(int argc, char** argv)
 
 	unsigned char* data;
 
-	if(llwrite(fd, &data, 5))
+	if(llwrite(fd, &data, 255))
 		return 1;
 
 	if(llclose(fd))

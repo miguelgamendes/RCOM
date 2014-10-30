@@ -69,8 +69,6 @@ int main(int argc, char** argv)
 	if(llwrite(fd, &data, 5))
 		return 1;
 
-	free(data);
-
 	if(llclose(fd))
 		return 1;
     

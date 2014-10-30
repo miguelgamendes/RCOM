@@ -1,3 +1,10 @@
+#define ESCAPE 0x7D
+#define XOR_ESCAPE 0x5D
+#define XOR_FLAG 0x5E
+#define STF_XOR_VALUE 0x20
+
+
+
 int stuffing(unsigned char* buf, int length, unsigned char** stufBuf)
 {
 	unsigned i;

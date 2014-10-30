@@ -1,6 +1,6 @@
 #include "llwrite.h"
 
-int llwrite(int fd, unsigned char** data, int dataSize) {
+int llwrite(int fd, unsigned char* data, int dataSize) {
 	int res = 0;
 	int resSum = 0;
 	int connecting = 1;
@@ -16,26 +16,24 @@ int llwrite(int fd, unsigned char** data, int dataSize) {
 	//machine state periferal vars
 	int stop = 1, estado = 0, res2;
 	unsigned char c;
-
-	char string[] = "The quick foo jumped over the lazy bar.";
-	*data = malloc(sizeof(char) * strlen(string));
-	*data = string;
 	
 	//sending I frame
 	puts("Sending I frame...");
-	printf("Data contents being sent: %s\n", *data);
+	printf("Data contents being sent: %s\n", data);
 	res = write(fd,Iheader,3);
 	resSum += res;
 	if(res != -1) {
 	} else {
+		puts("Error 1");
 		puts("Connection establishment failed.");
 		return 1;
 	}
 
-	res = write(fd,*data,dataSize);
+	res = write(fd,data,dataSize);
 	resSum += res;
 	if(res != -1) {
 	} else {
+		puts("Error 2");
 		puts("Connection establishment failed.");
 		return 1;
 	}
@@ -45,6 +43,7 @@ int llwrite(int fd, unsigned char** data, int dataSize) {
 	if(res != -1) {
 		printf("%d bytes written\n", resSum);
 	} else {
+		puts("Error 3");
 		puts("Connection establishment failed.");
 		return 1;
 	}

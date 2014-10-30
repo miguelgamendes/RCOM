@@ -1,6 +1,10 @@
 #ifndef APPLAYER_H
 #define APPLAYER_H
 
-int sendFile(char* filePath);
+#include "llopen.h"
+#include "llwrite.h"
+#include "llclose.h"
+
+int sendFile(int conn, int file);
 
 #endif

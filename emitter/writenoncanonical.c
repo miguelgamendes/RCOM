@@ -1,6 +1,6 @@
 /*Non-Canonical Input Processing*/
 
-#include "llopen.h"
+#include "applayer.h"
 
 #define BAUDRATE B38400
 #define MODEMDEVICE "/dev/ttyS1"
@@ -59,23 +59,18 @@ int main(int argc, char** argv)
     }
 
 	puts("Port is ready.");
+
+	//open file
+	int file = open("pinguim.gif", O_RDONLY);
 	
-	//data link protocol
-	if(llopen(fd))
-		return 1;
-
-	unsigned char* data;
-
-	if(llwrite(fd, &data, 255))
-		return 1;
-
-	if(llclose(fd))
-		return 1;
+	if(file != -1)
+		sendFile(fd, file);
     
     if ( tcsetattr(fd,TCSANOW,&oldtio) == -1) {
       perror("tcsetattr");
       exit(-1);
     }
+	close(file);
     close(fd);
 
     return 0;

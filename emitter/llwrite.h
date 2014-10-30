@@ -7,6 +7,6 @@
 #define CS 0x05
 #define CSR 0x01
 
-int llwrite(int fd, unsigned char** data, int dataSize);
+int llwrite(int fd, unsigned char* data, int dataSize);
 
 #endif LLWRITE_H

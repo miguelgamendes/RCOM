@@ -6,6 +6,6 @@
 #define C 0x0B
 #define CS 0x07
 
-int llclose();
+int llclose(int fd);
 
 #endif

@@ -6,8 +6,6 @@
 #define C 0x0B
 #define CS 0x07
 
-#include <unistd.h>
-
 int llclose();
 
 #endif

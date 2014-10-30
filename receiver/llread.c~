@@ -23,7 +23,7 @@ int llread(int fd){
 	REJ[3] = (REJ[1] ^ REJ[2]);
 	REJ[4] = F;
 
-	unsigned char* data = malloc(sizeof(unsigned char) * 5);
+	unsigned char* data = malloc(sizeof(unsigned char) * 255);
 
 	puts("Receiving I frame...");
 	while(stop){
@@ -98,7 +98,7 @@ int llread(int fd){
 		}
 	}
 
-	printf("Received data: %s\n", *data);
+	printf("Received data: %s\n", data);
 
 	return 0;
 }

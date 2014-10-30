@@ -23,7 +23,7 @@ int llread(int fd){
 	REJ[3] = (REJ[1] ^ REJ[2]);
 	REJ[4] = F;
 
-	unsigned char* data = malloc(sizeof(unsigned char) * 5);
+	unsigned char* data = malloc(sizeof(unsigned char) * 255);
 
 	puts("Receiving I frame...");
 	while(stop){
@@ -88,7 +88,7 @@ int llread(int fd){
 			case 5:{
 				printf("estado 5 : %x || %c - index: %d\n", c, c, dataIndex);
 				data[dataIndex] = c;
-				if(dataIndex == 4) {
+				if(dataIndex == 254) {
 					estado = 3;
 					dataIndex = 0;
 				}

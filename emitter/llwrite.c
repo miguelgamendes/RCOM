@@ -1,6 +1,6 @@
 #include "llwrite.h"
 
-int llwrite(int fd, unsigned char* data, int dataSize) {
+int llwrite(int fd, unsigned char** data, int dataSize) {
 	int res = 0;
 	int resSum = 0;
 	int connecting = 1;
@@ -17,9 +17,13 @@ int llwrite(int fd, unsigned char* data, int dataSize) {
 	int stop = 1, estado = 0, res2;
 	unsigned char c;
 
+	*data = malloc(sizeof(char) * 5);
+	*data = "aaaaa";
+	
 	//sending I frame
 	puts("Sending I frame...");
-	res = write(fd,Iheader,5);
+	printf("Data contents being sent: %s\n", *data);
+	res = write(fd,Iheader,3);
 	resSum += res;
 	if(res != -1) {
 	} else {
@@ -27,7 +31,7 @@ int llwrite(int fd, unsigned char* data, int dataSize) {
 		return 1;
 	}
 
-	res = write(fd,data,dataSize);
+	res = write(fd,*data,dataSize);
 	resSum += res;
 	if(res != -1) {
 	} else {
@@ -87,7 +91,7 @@ int llwrite(int fd, unsigned char* data, int dataSize) {
 					break;
 				}
 				case 3:{
-					printf("estado 3\n");
+					printf("estado 3: %x\n", c);
 					if (c == (RR[1] ^ RR[2])){
 						RR[3] = c;
 						estado = 4;

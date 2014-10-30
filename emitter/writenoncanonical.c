@@ -64,7 +64,7 @@ int main(int argc, char** argv)
 	if(llopen(fd))
 		return 1;
 
-	unsigned char* data = "aaaaa";
+	unsigned char* data;
 
 	if(llwrite(fd, &data, 5))
 		return 1;

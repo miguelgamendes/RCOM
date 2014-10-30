@@ -17,7 +17,7 @@ int llwrite(int fd, unsigned char** data, int dataSize) {
 	int stop = 1, estado = 0, res2;
 	unsigned char c;
 
-	char string[] = "Your mom used several tonsils to remove scars from her face.";
+	char string[] = "The quick foo jumped over the lazy bar.";
 	*data = malloc(sizeof(char) * strlen(string));
 	*data = string;
 	
@@ -92,7 +92,7 @@ int llwrite(int fd, unsigned char** data, int dataSize) {
 					break;
 				}
 				case 3:{
-					printf("estado 3: %x\n", c);
+					printf("estado 3:");
 					if (c == (RR[1] ^ RR[2])){
 						RR[3] = c;
 						estado = 4;

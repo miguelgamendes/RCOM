@@ -17,8 +17,8 @@ int llwrite(int fd, unsigned char** data, int dataSize) {
 	int stop = 1, estado = 0, res2;
 	unsigned char c;
 
-	char string[] = "Your mom used several tonsils to remove scars from her face.";
-	*data = malloc(sizeof(char) * strlen(string);
+	char string[] = "The quick foo jumped over the lazy bar.";
+	*data = malloc(sizeof(char) * strlen(string));
 	*data = string;
 	
 	//sending I frame

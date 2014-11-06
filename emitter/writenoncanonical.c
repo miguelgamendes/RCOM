@@ -61,7 +61,7 @@ int main(int argc, char** argv)
 	puts("Port is ready.");
 
 	//open file
-	int file = open("pinguim.gif", O_RDONLY);
+	int file = open("simple.txt", O_RDONLY);
 	
 	if(file != -1)
 		sendFile(fd, file);

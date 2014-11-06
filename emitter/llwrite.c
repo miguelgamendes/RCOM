@@ -16,7 +16,35 @@ int llwrite(int fd, unsigned char* data, int dataSize) {
 	//machine state periferal vars
 	int stop = 1, estado = 0, res2;
 	unsigned char c;
-	
+
+/*
+	//stuffing
+	unsigned char finalData[100];
+	int i, j, lastIndex;
+	//find final byte
+	for(i = 0; i < dataSize; i++)
+		if(data[i] == F)
+			lastIndex = i;
+	//init final data, changing F's
+	puts("Stuffing...");
+	for(i = 0, j = 0; i <= lastIndex; i++, j++)
+		printf("Data index: %d\n", i);
+		if(data[i] == F) {
+			finalData[j] = 0x7D;
+			finalData[j+1] = 0x5E;
+			j++;
+			lastIndex++;
+		} else if(data[i] == 0x7D) {
+			finalData[j] = 0x7D;
+			finalData[j+1] = 0x5D;
+			j++;
+			lastIndex++;
+		} else
+			finalData[j] = data[i];
+	//final byte
+	finalData[j] = F;
+	puts("Stuffed.");
+	*/
 	//sending I frame
 	puts("Sending I frame...");
 	printf("Data contents being sent: %s\n", data);
@@ -28,6 +56,16 @@ int llwrite(int fd, unsigned char* data, int dataSize) {
 		puts("Connection establishment failed.");
 		return 1;
 	}
+/*
+	res = write(fd,finalData,j+1);
+	resSum += res;
+	if(res != -1) {
+	} else {
+		puts("Error 2");
+		puts("Connection establishment failed.");
+		return 1;
+	}
+*/
 
 	res = write(fd,data,dataSize);
 	resSum += res;
@@ -37,6 +75,7 @@ int llwrite(int fd, unsigned char* data, int dataSize) {
 		puts("Connection establishment failed.");
 		return 1;
 	}
+
 
 	res = write(fd,Itail,2);
 	resSum += res;
@@ -48,7 +87,7 @@ int llwrite(int fd, unsigned char* data, int dataSize) {
 		return 1;
 	}
 			
-	//receiving UA frame
+	//receiving RR frame
 	puts("Reading response frame...");
 	while(stop){
 		res = read(fd,&c,1);

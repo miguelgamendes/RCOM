@@ -1,0 +1,13 @@
+#include "applayer.h"
+
+int receiveFile(int conn, int file) {
+	llopen(conn);
+
+	int i;
+	for(i = 0; i < 50; i = i + 10)
+		llread(conn, file);
+
+	llclose(conn);
+	
+	return 0;
+}

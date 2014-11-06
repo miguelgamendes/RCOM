@@ -5,7 +5,8 @@ int sendFile(int conn, int file) {
 	unsigned char data[10];
 	int currentBufSize = 1;
 
-	llopen(conn);
+	if(llopen(conn))
+		return 1;
 	
 	int i, j;
 	while(1) {

@@ -16,7 +16,8 @@ int sendFile(int conn, int file) {
 		if(currentBufSize == 0)
 			break;
 		printf("Contents read from file: %s | BufSize: %d\n", data, currentBufSize);
-		llwrite(conn, data, currentBufSize);
+		if(llwrite(conn, data, currentBufSize))
+			return 1;
 	}
 
 	llclose(conn);

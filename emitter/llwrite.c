@@ -1,8 +1,16 @@
 #include "llwrite.h"
 
+void set() {
+	retry_count++;
+	sending = 1;
+}
+
 int llwrite(int fd, unsigned char* data, int dataSize) {
-	int successful = 0;
-	while(!successful){
+	retry_count = 0;
+	successful = 0;
+	sending = 1;
+	while(retry_count <= 3 && !successful){
+		in(sending)}
 	int res = 0;
 	int resSum = 0;
 	int connecting = 1;
@@ -47,6 +55,11 @@ int llwrite(int fd, unsigned char* data, int dataSize) {
 	finalData[j] = F;
 	puts("Stuffed.");
 	*/
+
+	puts("Setting alarm signal...");
+	signal(SIGALRM, set); //install set routine
+	puts("Alarm signal set.");
+
 	//sending I frame
 	puts("Sending I frame...");
 	printf("Data contents being sent: %s\n", data);
@@ -184,7 +197,9 @@ int llwrite(int fd, unsigned char* data, int dataSize) {
 		if(estado == 4 || estado == 5)
 			break;
 	}
-	}
+		sending = 0;
+	}//if sending
+	}//while retry count and successfull
 
 	return 0;
 }

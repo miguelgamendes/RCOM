@@ -7,6 +7,10 @@
 #define CS 0x05
 #define CSR 0x01
 
+int retry_count;
+int sending;
+int successful;
+
 int llwrite(int fd, unsigned char* data, int dataSize);
 
 #endif LLWRITE_H

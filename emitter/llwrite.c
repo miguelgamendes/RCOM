@@ -1,6 +1,8 @@
 #include "llwrite.h"
 
 int llwrite(int fd, unsigned char* data, int dataSize) {
+	int successful = 0;
+	while(!successful){
 	int res = 0;
 	int resSum = 0;
 	int connecting = 1;
@@ -148,10 +150,11 @@ int llwrite(int fd, unsigned char* data, int dataSize) {
 						if (RR[0] == F && RR[1] == A && RR[2] == CS && RR[3] == (RR[1] ^ RR[2]) && RR[4] == F){
 							puts("Received RR frame successfully.");
 							stop = 0;
+							successful = 1;
 							puts("Finished reading.");
 							break;
 						} else {
-							puts("REJ frame is wrong, somehow.");
+							puts("RR frame is wrong, somehow.");
 							estado = 0;
 						}
 					} else
@@ -168,7 +171,7 @@ int llwrite(int fd, unsigned char* data, int dataSize) {
 							puts("Finished reading.");
 							break;
 						} else {
-							puts("RR frame is wrong, somehow.");
+							puts("REJ frame is wrong, somehow.");
 							estado = 0;
 						}
 					} else
@@ -180,6 +183,7 @@ int llwrite(int fd, unsigned char* data, int dataSize) {
 
 		if(estado == 4 || estado == 5)
 			break;
+	}
 	}
 
 	return 0;

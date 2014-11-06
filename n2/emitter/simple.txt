@@ -1,0 +1,2 @@
+Teste de tamanho aleatório.
+Qualquer output neste ficheiro deverá ser semelhante ao do ficheiro enviado.

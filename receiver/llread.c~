@@ -105,7 +105,7 @@ int llread(int fd, int file){
 			finalData[j] = data[i];
 	}
 */
-	int thing = write(file, data, sizeof(unsigned char) * (dataIndex - 1));
+	int thing = write(file, data, sizeof(unsigned char) * dataIndex);
 	if(thing == 0 || thing == -1){
 		puts("omgwritefailed");
 		return 1;

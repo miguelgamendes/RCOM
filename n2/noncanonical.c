@@ -5,20 +5,23 @@
 #include <fcntl.h>
 #include <termios.h>
 #include <stdio.h>
-#include "llopen.h"
 
 #define BAUDRATE B38400
 #define _POSIX_SOURCE 1 /* POSIX compliant source */
 #define FALSE 0
 #define TRUE 1
+#define F 0x7E
+#define A 0x03
+#define C 0x03
 
+#define CS 0x07
 
 
 volatile int STOP=FALSE;
 
 int main(int argc, char** argv)
 {
-    int fd;
+    int fd, res, res2;
     struct termios oldtio,newtio;
     char buf[255];
 
@@ -59,8 +62,10 @@ int main(int argc, char** argv)
 
   /* 
     VTIME e VMIN devem ser alterados de forma a proteger com um temporizador a 
-    leitura do(s) próximo(s) caracter(es)
+    leitura do(s) prÃ³ximo(s) caracter(es)
   */
+
+
 
     tcflush(fd, TCIOFLUSH);
 
@@ -71,15 +76,94 @@ int main(int argc, char** argv)
 
 	printf("New termios structure set\n");
 
-	int file = open("simple.txt", O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IWGRP | S_IXGRP | S_IROTH | S_IWOTH | S_IXOTH);
-	
-	if(file == -1)
-		puts("fuck");
+	unsigned char SET[5];
+	unsigned char UA[5];
 
-	receiveFile(fd, file);
+	UA[0] = F;
+	UA[1] = A;
+	UA[2] = CS;
+	UA[3] = UA[1] ^ UA[2];
+	UA[4] = F;
 
-	close(file);
- 
+	int estado = 0;
+	unsigned char c;
+	int stop = 1;
+
+
+	while(stop){
+	    	res = read(fd,&c,1);
+		switch(estado){
+			case 0: {
+				printf("estado 0\n");
+				if (c == F){
+					SET[0] = c;
+					estado = 1;
+				}
+			break;
+			}
+			case 1:{
+				printf("estado 1\n");
+				if (c == A){
+					SET[1] = c;
+					estado = 2;
+				}
+				else if (c == F){
+					estado = 1;
+					SET[0] = c;
+				}
+				else 
+					estado = 0;
+				break;	
+			}
+			case 2:{				
+				printf("estado 2\n");
+				if (c == C){
+					SET[2] = c;
+					estado = 3;
+				}
+				else if (c == F){
+					SET[0] = c;
+					estado = 1;
+				}
+				else
+					estado = 0; 
+				break;
+			}
+			case 3:{
+				printf("estado 3\n");
+				if (c == SET[1]^SET[2]){
+					SET[3] = c;
+					estado = 4;
+				}
+				else if (c == F){
+					SET[0] = c;
+					estado = 1;
+				}
+				else 
+					estado = 0;
+				break;
+			}
+			case 4:{
+				printf("estado 4\n");
+				if (c == F){
+					SET[4] = c;
+					if (SET[0] == F && SET[1] == A && SET[2] == C && SET[3] == SET[1]^SET[2] && SET[4] == F){
+						res2 = write(fd,UA,5);
+						stop = 0;
+						break;
+					}
+					else
+						estado = 0;
+				}
+				else
+					estado = 0;
+				break;
+			}
+		}
+	}
+
+	printf("Enviou %d bytes \n",res2);
+
     tcsetattr(fd,TCSANOW,&oldtio);
     close(fd);
     return 0;

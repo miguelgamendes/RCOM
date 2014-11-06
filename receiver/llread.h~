@@ -9,7 +9,6 @@
 
 #include <fcntl.h>
 #include <unistd.h>
-#include <sys/stat.h>
 
 int llread(int conn, int file);
 

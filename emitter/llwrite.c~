@@ -199,9 +199,6 @@ int llwrite(int fd, unsigned char* data, int dataSize) {
 				}
 			}
 		}
-
-		//if(estado == 4 || estado == 5)
-		//	break;
 	}
 		sending = 0;
 	//}//if sending

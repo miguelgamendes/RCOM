@@ -14,8 +14,8 @@ int llwrite(int fd, unsigned char* data, int dataSize) {
 	signal(SIGALRM, set2); //install set routine
 	puts("Alarm signal set.");
 
-	//while(retry_count <= 3 && !successful){
-	//	if(sending){
+	while(retry_count <= 3 && !successful){
+		if(sending){
 	int res = 0;
 	int resSum = 0;
 
@@ -201,8 +201,8 @@ int llwrite(int fd, unsigned char* data, int dataSize) {
 		}
 	}
 		sending = 0;
-	//}//if sending
-	//}//while retry count and successfull
+	}//if sending
+	}//while retry count and successfull
 
 	return 0;
 }

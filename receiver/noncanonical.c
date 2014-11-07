@@ -71,7 +71,7 @@ int main(int argc, char** argv)
 
 	printf("New termios structure set\n");
 
-	int file = open("simple.txt", O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IWGRP | S_IXGRP | S_IROTH | S_IWOTH | S_IXOTH);
+	int file = open("pinguim.gif", O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR | S_IXUSR | S_IRGRP | S_IWGRP | S_IXGRP | S_IROTH | S_IWOTH | S_IXOTH);
 	
 	if(file == -1)
 		puts("fuck");

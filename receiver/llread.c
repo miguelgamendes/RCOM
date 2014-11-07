@@ -91,7 +91,7 @@ int llread(int fd, int file){
 	res2 = write(fd,RR,5);
 	printf("Enviou %d bytes \n",res2);
 	stop = 0;
-/*
+
 	//unstuffing
 	unsigned char finalData[100];
 	int i, j;
@@ -101,18 +101,19 @@ int llread(int fd, int file){
 				finalData[j] = F;
 			else if(data[i+1] == 0x5D)
 				finalData[j] = 0x7D;
+			i++;
 		} else
 			finalData[j] = data[i];
 	}
-*/
-	int thing = write(file, data, sizeof(unsigned char) * (dataIndex - 1));
+
+	int thing = write(file, finalData, sizeof(unsigned char) * (j - 1));
 	if(thing == 0 || thing == -1){
 		puts("omgwritefailed");
 		return 1;
 	} else
 		printf("%d bytes written to file (supposedly).", thing);
 
-	printf("Received data: %s\n", data);
+	printf("Received data: %s\n", finalData);
 
 	return 0;
 }

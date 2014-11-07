@@ -17,7 +17,7 @@ int llopen(int fd) {
 	unsigned char SET[5], UA[5];
 	SET[0] = F;
 	SET[1] = A;
-	SET[2] = C;
+	SET[2] = C_OPEN;
 	SET[3] = SET[1] ^ SET[2];
 	SET[4] = F;
 
@@ -49,7 +49,6 @@ int llopen(int fd) {
 			while(stop && !connecting){
 				res = read(fd,&c,1);
 				if(res > 0) {
-					alarm(0);
 					switch(estado){
 						case 0: {
 							printf("estado 0\n");
@@ -73,7 +72,7 @@ int llopen(int fd) {
 						}
 						case 2:{				
 							printf("estado 2\n");
-							if (c == CS){
+							if (c == C_UA){
 								UA[2] = c;
 								estado = 3;
 							} else if (c == F){
@@ -99,9 +98,10 @@ int llopen(int fd) {
 							printf("estado 4\n");
 							if (c == F){
 								UA[4] = c;
-								if (UA[0] == F && UA[1] == A && UA[2] == CS && UA[3] == (UA[1] ^ UA[2]) && UA[4] == F){
+								if (UA[0] == F && UA[1] == A && UA[2] == C_UA && UA[3] == (UA[1] ^ UA[2]) && UA[4] == F){
 									puts("Received UA frame successfully.");
 									stop = 0;
+									alarm(0);
 									puts("Finished reading.");
 									break;
 								} else {

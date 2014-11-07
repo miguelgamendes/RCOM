@@ -1,10 +1,7 @@
 #ifndef LLOPEN_H
 #define LLOPEN_H
 
-#define F 0x7E
-#define A 0x03
-#define C 0x03
-#define CS 0x07
+#include "bytevalues.h"
 
 #include <sys/types.h>
 #include <sys/stat.h>

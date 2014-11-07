@@ -8,7 +8,7 @@ int llclose(int fd) {
 	unsigned char DISC[5], DISC2[5];
 	DISC[0] = F;
 	DISC[1] = A;
-	DISC[2] = C;
+	DISC[2] = C_CLOSE;
 	DISC[3] = DISC[1] ^ DISC[2];
 	DISC[4] = F;
 
@@ -55,7 +55,7 @@ int llclose(int fd) {
 				}
 				case 2:{				
 					printf("estado 2\n");
-					if (c == C){
+					if (c == C_CLOSED){
 						DISC2[2] = c;
 						estado = 3;
 					} else if (c == F){
@@ -81,7 +81,7 @@ int llclose(int fd) {
 					printf("estado 4\n");
 					if (c == F){
 						DISC2[4] = c;
-						if (DISC2[0] == F && DISC2[1] == A && DISC2[2] == CS && DISC2[3] == (DISC2[1] ^ DISC2[2]) && DISC2[4] == F){
+						if (DISC2[0] == F && DISC2[1] == A && DISC2[2] == C_CLOSED && DISC2[3] == (DISC2[1] ^ DISC2[2]) && DISC2[4] == F){
 							puts("Received DISC frame successfully.");
 							stop = 0;
 							puts("Finished reading.");

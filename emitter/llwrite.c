@@ -1,6 +1,6 @@
 #include "llwrite.h"
 
-void set() {
+void set2() {
 	retry_count++;
 	sending = 1;
 }
@@ -9,17 +9,21 @@ int llwrite(int fd, unsigned char* data, int dataSize) {
 	retry_count = 0;
 	successful = 0;
 	sending = 1;
-	while(retry_count <= 3 && !successful){
-		in(sending)}
+
+	puts("Setting alarm signal...");
+	signal(SIGALRM, set2); //install set routine
+	puts("Alarm signal set.");
+
+	//while(retry_count <= 3 && !successful){
+	//	if(sending){
 	int res = 0;
 	int resSum = 0;
-	int connecting = 1;
 
 	//frame creation
 	unsigned char Iheader[3], Itail[2], RR[5];
 	Iheader[0] = F;
 	Iheader[1] = A;
-	Iheader[2] = C;
+	Iheader[2] = C_WRITE;
 	Itail[0] = Iheader[1] ^ Iheader[2];
 	Itail[1] = F;
 
@@ -55,10 +59,6 @@ int llwrite(int fd, unsigned char* data, int dataSize) {
 	finalData[j] = F;
 	puts("Stuffed.");
 	*/
-
-	puts("Setting alarm signal...");
-	signal(SIGALRM, set); //install set routine
-	puts("Alarm signal set.");
 
 	//sending I frame
 	puts("Sending I frame...");
@@ -101,13 +101,15 @@ int llwrite(int fd, unsigned char* data, int dataSize) {
 		puts("Connection establishment failed.");
 		return 1;
 	}
+
+	alarm(3);
 			
 	//receiving RR frame
 	puts("Reading response frame...");
 	while(stop){
 		res = read(fd,&c,1);
 		if(res > 0) {
-			alarm(0);
+			printf("Estado: %d\n", estado);
 			switch(estado){
 				case 0: {
 					printf("estado 0\n");
@@ -131,10 +133,10 @@ int llwrite(int fd, unsigned char* data, int dataSize) {
 				}
 				case 2:{				
 					printf("estado 2\n");
-					if (c == CS){
+					if (c == C_RR){
 						RR[2] = c;
 						estado = 3;
-					} else if (c == CSR) {
+					} else if (c == C_REJ) {
 						RR[2] = c;
 						estado = 5;
 					} else if (c == F){
@@ -145,25 +147,29 @@ int llwrite(int fd, unsigned char* data, int dataSize) {
 					break;
 				}
 				case 3:{
-					printf("estado 3:");
+					printf("estado 3\n");
 					if (c == (RR[1] ^ RR[2])){
 						RR[3] = c;
 						estado = 4;
+						puts("xoring");
 					} else if (c == F){
 						RR[0] = c;
 						estado = 1;
 					} else 
 						estado = 0;
+					printf("End of state3\n");
+					printf("Final state: %d\n", estado);
 					break;
 				}
 				case 4:{
 					printf("estado 4\n");
 					if (c == F){
 						RR[4] = c;
-						if (RR[0] == F && RR[1] == A && RR[2] == CS && RR[3] == (RR[1] ^ RR[2]) && RR[4] == F){
+						if (RR[0] == F && RR[1] == A && RR[2] == C_RR && RR[3] == (RR[1] ^ RR[2]) && RR[4] == F){
 							puts("Received RR frame successfully.");
 							stop = 0;
 							successful = 1;
+							alarm(0);
 							puts("Finished reading.");
 							break;
 						} else {
@@ -178,7 +184,7 @@ int llwrite(int fd, unsigned char* data, int dataSize) {
 					puts("estado 5");
 					if (c == F){
 						RR[4] = c;
-						if (RR[0] == F && RR[1] == A && RR[2] == CSR && RR[3] == (RR[1] ^ RR[2]) && RR[4] == F){
+						if (RR[0] == F && RR[1] == A && RR[2] == C_REJ && RR[3] == (RR[1] ^ RR[2]) && RR[4] == F){
 							puts("Received REJ frame successfully.");
 							stop = 0;
 							puts("Finished reading.");
@@ -193,13 +199,10 @@ int llwrite(int fd, unsigned char* data, int dataSize) {
 				}
 			}
 		}
-
-		if(estado == 4 || estado == 5)
-			break;
 	}
 		sending = 0;
-	}//if sending
-	}//while retry count and successfull
+	//}//if sending
+	//}//while retry count and successfull
 
 	return 0;
 }

@@ -44,15 +44,11 @@ int llopen(int fd) {
 				return 1;
 			}
 			
-			printf("stop: %d\nconnecting: %d", stop, connecting);
-			
 			//receiving UA frame
 			puts("Reading UA frame...");
 			while(stop && !connecting){
-				puts("Reading...");
 				res = read(fd,&c,1);
 				if(res > 0) {
-					alarm(0);
 					switch(estado){
 						case 0: {
 							printf("estado 0\n");
@@ -105,6 +101,7 @@ int llopen(int fd) {
 								if (UA[0] == F && UA[1] == A && UA[2] == CS && UA[3] == (UA[1] ^ UA[2]) && UA[4] == F){
 									puts("Received UA frame successfully.");
 									stop = 0;
+									alarm(0);
 									puts("Finished reading.");
 									break;
 								} else {
